@@ -83,9 +83,7 @@ impl<F: FutureSpawner, I: NavigatorInterface> ExternalNavigatorBackend<F, I> {
         let mut builder = reqwest::ClientBuilder::new()
             .cookie_store(true)
             .user_agent(concat!(
-                "Ruffle/",
-                env!("CARGO_PKG_VERSION"),
-                " (https://ruffle.rs)"
+                "Shockwave Flash"
             ));
 
         if let Some(referer) = referer {

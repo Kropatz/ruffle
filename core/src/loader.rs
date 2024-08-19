@@ -1527,6 +1527,7 @@ impl<'gc> Loader<'gc> {
             .expect("Could not upgrade weak reference to player");
 
         Box::pin(async move {
+            tracing::warn!("Loading {:?} ", request.url());
             let fetch = player.lock().unwrap().navigator().fetch(request);
             let response = Self::wait_for_full_response(fetch).await;
 
@@ -1591,6 +1592,7 @@ impl<'gc> Loader<'gc> {
 
                 match response {
                     Ok((body, _, status, redirected)) => {
+                        tracing::warn!("Loading success");
                         let total_len = body.len();
 
                         // FIXME - the "open" event should be fired earlier, just before

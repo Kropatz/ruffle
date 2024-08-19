@@ -39,6 +39,7 @@ impl StorageBackend for DiskStorageBackend {
         if !Self::is_path_allowed(&path) {
             return None;
         }
+        tracing::warn!("Reading file \"{:#?}\"", path.clone().into_os_string());
         match std::fs::read(path) {
             Ok(data) => Some(data),
             Err(e) => {
@@ -50,6 +51,7 @@ impl StorageBackend for DiskStorageBackend {
 
     fn put(&mut self, name: &str, value: &[u8]) -> bool {
         let path = self.get_shared_object_path(name);
+        tracing::warn!("Writing file \"{:#?}\"", path.clone().into_os_string());
         if !Self::is_path_allowed(&path) {
             return false;
         }
@@ -80,6 +82,7 @@ impl StorageBackend for DiskStorageBackend {
 
     fn remove_key(&mut self, name: &str) {
         let path = self.get_shared_object_path(name);
+        tracing::warn!("Removing file \"{}\"", name);
         if !Self::is_path_allowed(&path) {
             return;
         }
